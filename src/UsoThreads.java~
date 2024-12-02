@@ -189,7 +189,7 @@ class MarcoRebote extends JFrame{
             try {
                 Thread.sleep(4);
             } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
             }
 
         }
