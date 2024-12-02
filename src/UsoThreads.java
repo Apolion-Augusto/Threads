@@ -21,7 +21,37 @@ public class UsoThreads {
 
 }
 
+//Creando un programa multitareado--------------------------------------------------------------------------------
 
+class PelotaHilos implements Runnable{
+
+    private Pelota pelota;
+    private Component componente;
+
+    public PelotaHilos(Pelota unaPelota, Component unComponente){
+
+        pelota=unaPelota;
+        componente=unComponente;
+    }
+
+    public void run() {
+        for (int i=1; i<=3000; i++){
+
+            pelota.mueve_pelota(componente.getBounds());
+
+            componente.paint(componente.getGraphics());
+
+            //Pausa. Espera 4 milisegundos
+            try {
+                Thread.sleep(4);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+
+    }
+}
 
 
 //Movimiento de la pelota-----------------------------------------------------------------------------------------
@@ -180,19 +210,11 @@ class MarcoRebote extends JFrame{
 
         lamina.add(pelota);
 
-        for (int i=1; i<=3000; i++){
+        Runnable r = new PelotaHilos(pelota, lamina);
 
-            pelota.mueve_pelota(lamina.getBounds());
+        Thread t = new Thread(r);
 
-            lamina.paint(lamina.getGraphics());
-
-            try {
-                Thread.sleep(4);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-
-        }
+        t.start();
 
 
 
